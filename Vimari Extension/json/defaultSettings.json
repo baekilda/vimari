@@ -23,9 +23,10 @@
       "goBack": "shift+h",
       "goForward": "shift+l",
       "reload": "r",
-      "tabForward": "w",
-      "tabBack": "q",
+      "tabForward": "ctrl+l",
+      "tabBack": "ctrl+h",
       "closeTab": "x",
-      "openTab": "t"
+      "openTab": "t",
+      "duplicateTab": "d"
   }
 }
