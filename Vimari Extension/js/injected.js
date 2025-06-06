@@ -167,12 +167,12 @@ function bindKeyCodesToActions(settings) {
 		Mousetrap.bind('esc', enterNormalMode);
 		Mousetrap.bind('ctrl+[', enterNormalMode);
 		Mousetrap.bind('i', enterInsertMode);
-		for (var actionName in actionMap) {
+		Object.keys(actionMap).forEach((actionName, index) => {
 			if (actionMap.hasOwnProperty(actionName)) {
 				var keyCode = getKeyCode(actionName);
 				Mousetrap.bind(keyCode, executeAction(actionName), 'keydown');
 			}
-		}
+		});
 	}
 }
 
@@ -185,7 +185,7 @@ function enterNormalMode() {
 
 
     if (insertMode === false) {
-        return // We are already in normal mode.
+        return false; // We are already in normal mode.
     }
 
 	// Re-enable if in insert mode
@@ -193,6 +193,7 @@ function enterNormalMode() {
     HUD.showForDuration('Normal Mode', hudDuration);
 
 	Mousetrap.bind('i', enterInsertMode);
+    return false;
 }
 
 // Calling it 'insert mode', but it's really just a user-triggered
@@ -207,10 +208,11 @@ function enterInsertMode() {
 }
 
 function executeAction(actionName) {
-	return function() {
+    return function() {
 		// don't do anything if we're not supposed to
-		if (linkHintsModeActivated || !extensionActive || insertMode)
-			return;
+        if (linkHintsModeActivated || !extensionActive || insertMode) {
+            return;
+        }
 
 		//Call the action function
 		actionMap[actionName]();
